@@ -167,6 +167,19 @@ div[data-testid="stImage"] img {
     color: #2c3e50;
     text-align: center;
 }
+            
+/* Responsive header for mobile */
+@media (max-width: 600px) {
+    .header-glass {
+        padding: 8px 0 10px 0;
+        border-radius: 14px;
+    }
+    .header-glass h1 {
+        font-size: 1.3rem;
+        padding: 0 8px;
+        text-align: center;
+    }
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -187,7 +200,7 @@ with col_nav1:
     if st.button('🌱 Crop Recommendation', key='nav_recommend', use_container_width=True):
         st.session_state['active_section'] = 'recommend'
 with col_nav2:
-    if st.button('🔍 Reverse Search', key='nav_reverse', use_container_width=True):
+    if st.button('🔍 best soil & climate for crops', key='nav_reverse', use_container_width=True):
         st.session_state['active_section'] = 'reverse'
 st.markdown("</div>", unsafe_allow_html=True)
 
@@ -376,6 +389,6 @@ if st.session_state['active_section'] == 'reverse':
 # Footer Section
 st.markdown("""
 <div class='footer-glass'>
-    <div style='color:#888; font-size:1rem;'>Developed with ❤️ for Agriculture &copy; 2024</div>
+    <div style='color:#888; font-size:1rem;'>&copy; 2025</div>
 </div>
 """, unsafe_allow_html=True)
