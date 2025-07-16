@@ -6,79 +6,9 @@ from sklearn.ensemble import RandomForestClassifier
 from streamlit_echarts import st_echarts
 import time
 import json
-from pathlib import Path
-import base64
 
-# ================== PWA CONFIGURATION ==================
-def add_pwa_meta_tags():
-    """Add meta tags for PWA support"""
-    pwa_meta = """
-        <!-- PWA Meta Tags -->
-        <link rel="manifest" href="/manifest.json">
-        <meta name="mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-        <meta name="apple-mobile-web-app-title" content="Crop Recommender">
-        <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
-        <meta name="theme-color" content="#27ae60">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-    """
-    st.markdown(pwa_meta, unsafe_allow_html=True)
+st.set_page_config(page_title="Crop Recommendation System", page_icon="🌱", layout="centered")
 
-def create_manifest_file():
-    """Create a manifest.json file in the static folder"""
-    manifest = {
-        "name": "Crop Recommendation System",
-        "short_name": "CropRecommender",
-        "description": "AI-powered crop recommendation based on soil and climate parameters",
-        "start_url": "/",
-        "display": "standalone",
-        "background_color": "#ffffff",
-        "theme_color": "#27ae60",
-        "orientation": "portrait-primary",
-        "icons": [
-            {
-                "src": "/icons/icon-192x192.png",
-                "sizes": "192x192",
-                "type": "image/png",
-                "purpose": "any maskable"
-            },
-            {
-                "src": "/icons/icon-512x512.png",
-                "sizes": "512x512",
-                "type": "image/png",
-                "purpose": "any maskable"
-            }
-        ]
-    }
-    
-    # Create static folder if it doesn't exist
-    static_folder = Path("static")
-    static_folder.mkdir(exist_ok=True)
-    
-    # Create icons folder inside static
-    icons_folder = static_folder / "icons"
-    icons_folder.mkdir(exist_ok=True)
-    
-    # Write manifest file
-    with open(static_folder / "manifest.json", "w") as f:
-        json.dump(manifest, f)
-
-# Initialize PWA
-create_manifest_file()
-
-# ================== MAIN APP ==================
-st.set_page_config(
-    page_title="Crop Recommendation System", 
-    page_icon="🌱", 
-    layout="centered",
-    initial_sidebar_state="collapsed"
-)
-
-# Add PWA meta tags to the head
-add_pwa_meta_tags()
-
-# Custom CSS
 st.markdown("""
 <style>
 body {
@@ -86,9 +16,6 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 /* Hide Streamlit main menu and footer */
-#MainMenu {visibility: hidden;}
-footer {visibility: hidden;}
-header {visibility: hidden;}
 
 .header-glass {
     width: 100%;
@@ -184,6 +111,17 @@ header {visibility: hidden;}
     margin-bottom: 0px !important;
     border-radius: 12px !important;
 }
+# In your CSS section, replace the image styling with this:
+/* Image styling */
+.stImage {
+    border: 4px solid #27ae60 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 12px rgba(39,174,96,0.25) !important;
+    padding: 4px;
+    background: white;
+}
+
+/* Or alternatively, if the above doesn't work, try this more specific selector: */
 div[data-testid="stImage"] img {
     border: 4px solid #27ae60 !important;
     border-radius: 12px !important;
@@ -227,6 +165,7 @@ div[data-testid="stImage"] img {
     color: #2c3e50;
     text-align: center;
 }
+            
 /* Responsive header for mobile */
 @media (max-width: 600px) {
     .header-glass {
@@ -256,10 +195,10 @@ if 'active_section' not in st.session_state:
 st.markdown("<div class='nav-buttons-container'>", unsafe_allow_html=True)
 col_nav1, col_nav2 = st.columns(2, gap="small")
 with col_nav1:
-    if st.button('🌱 Crop Recommendation', key='nav_recommend', use_container_width=True, type="primary" if st.session_state['active_section'] == 'recommend' else "secondary"):
+    if st.button('🌱 Crop Recommendation', key='nav_recommend', use_container_width=True):
         st.session_state['active_section'] = 'recommend'
 with col_nav2:
-    if st.button('🔍 Best Soil & Climate', key='nav_reverse', use_container_width=True, type="primary" if st.session_state['active_section'] == 'reverse' else "secondary"):
+    if st.button('🔍 best soil & climate for crops', key='nav_reverse', use_container_width=True):
         st.session_state['active_section'] = 'reverse'
 st.markdown("</div>", unsafe_allow_html=True)
 
@@ -326,11 +265,10 @@ if st.session_state['active_section'] == 'recommend':
             
         st.success(f"Recommended Crop: **{predicted_crop}**")
         
-        # Display crop image (placeholder - you'll need actual images)
+        # Display crop image
+        image_path = f"crops/{predicted_crop.lower()}.webp"
         try:
-            # This is a placeholder - replace with your actual image path
-            st.image(f"https://source.unsplash.com/300x200/?{predicted_crop.lower()},agriculture", 
-                    caption=predicted_crop, use_container_width=True)
+            st.image(image_path, caption=predicted_crop, use_container_width=True)
         except:
             st.warning(f"Image for {predicted_crop} not found.")
         
@@ -338,13 +276,13 @@ if st.session_state['active_section'] == 'recommend':
         prob_df = pd.DataFrame({
             "Crop": model.classes_,
             "Probability": probabilities
-        }).sort_values(by="Probability", ascending=False).head(10)
+        }).sort_values(by="Probability", ascending=False).head(10)  # Show top 10 only
         
         st.subheader("Top Recommended Crops")
         st.table(prob_df.style.format({"Probability": "{:.2%}"}).background_gradient(cmap='YlGn'))
         
-        # Prepare chart data
-        top_crops = prob_df.head(10)
+        # Prepare chart data with rotated labels
+        top_crops = prob_df.head(10)  # Show top 10 for better readability
         option = {
             "title": {"text": "Crop Suitability Scores", "left": "center"},
             "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}},
@@ -392,7 +330,7 @@ if st.session_state['active_section'] == 'recommend':
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-elif st.session_state['active_section'] == 'reverse':
+if st.session_state['active_section'] == 'reverse':
     st.markdown("<div class='glass-card'>", unsafe_allow_html=True)
 
     st.header("Reverse Search: Get Ideal Parameters for a Crop")
@@ -401,6 +339,7 @@ elif st.session_state['active_section'] == 'reverse':
     
     if st.button("Show Ideal Parameters", type="primary", key="reverse_btn"):
         with st.spinner(''):
+            # Custom loading animation for reverse search
             loading_placeholder = st.empty()
             with loading_placeholder.container():
                 st.markdown("""
@@ -414,7 +353,7 @@ elif st.session_state['active_section'] == 'reverse':
                 </div>
                 """, unsafe_allow_html=True)
             
-            time.sleep(1.5)
+            time.sleep(1.5)  # Simulate processing time
             crop_df = data[data['label'] == selected_crop]
             mean_params = crop_df[['N', 'P', 'K', 'temperature', 'humidity', 'ph', 'rainfall']].mean().to_dict()
             
@@ -422,12 +361,14 @@ elif st.session_state['active_section'] == 'reverse':
         
         st.success(f"**Ideal Parameters for {selected_crop.capitalize()}**")
         
+        # Display crop image
+        image_path = f"crops/{selected_crop.lower()}.webp"
         try:
-            st.image(f"https://source.unsplash.com/300x200/?{selected_crop.lower()},farm", 
-                   caption=selected_crop, use_container_width=True)
+            st.image(image_path, caption=selected_crop, use_container_width=True)
         except:
             st.warning(f"Image for {selected_crop} not found.")
         
+        # Display parameters in a nice table
         st.markdown(f"""
         <table class='probability-table'>
             <tr><th>Parameter</th><th>Recommended Value</th></tr>
@@ -446,7 +387,6 @@ elif st.session_state['active_section'] == 'reverse':
 # Footer Section
 st.markdown("""
 <div class='footer-glass'>
-    <div style='color:#888; font-size:1rem;'>&copy; 2025 Crop Recommendation System</div>
-    <div style='color:#888; font-size:0.8rem; margin-top:4px;'>Add to home screen for better experience</div>
+    <div style='color:#888; font-size:1rem;'>&copy; 2025</div>
 </div>
 """, unsafe_allow_html=True)
