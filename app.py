@@ -16,9 +16,7 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 /* Hide Streamlit main menu and footer */
-#MainMenu {visibility: hidden;}
-footer {visibility: hidden;}
-header {visibility: hidden;}
+
 .header-glass {
     width: 100%;
     padding: 10px 0 16px 0;
