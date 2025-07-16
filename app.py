@@ -266,7 +266,7 @@ if st.session_state['active_section'] == 'recommend':
         st.success(f"Recommended Crop: **{predicted_crop}**")
         
         # Display crop image
-        image_path = f"crops/{predicted_crop.lower()}.jpg"
+        image_path = f"crops/{predicted_crop.lower()}.webp"
         try:
             st.image(image_path, caption=predicted_crop, use_container_width=True)
         except:
@@ -362,7 +362,7 @@ if st.session_state['active_section'] == 'reverse':
         st.success(f"**Ideal Parameters for {selected_crop.capitalize()}**")
         
         # Display crop image
-        image_path = f"crops/{selected_crop.lower()}.jpg"
+        image_path = f"crops/{selected_crop.lower()}.webp"
         try:
             st.image(image_path, caption=selected_crop, use_container_width=True)
         except:
