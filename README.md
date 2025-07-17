@@ -1,5 +1,5 @@
 # Crop Recommendation System  
-  
+  ## [Kaggle Dataset](https://www.kaggle.com/datasets/madhuraatmarambhagat/crop-recommendation-dataset "Crop Recommendation Dataset")
 This application helps farmers determine the best crop to plant based on soil conditions and climate parameters. It uses a machine learning model trained on a dataset of various crops and their optimal growing conditions.  
   
 ## Features  
@@ -66,4 +66,5 @@ The application uses two machine learning models for crop recommendation and ana
   
 Both models are trained and evaluated in the included notebook (`FinalProject.ipynb`). The Decision Tree model is used for real-time recommendations in the app, while KNN is included for performance comparison and educational purposes.  
   
-## [Kaggle Dataset](https://www.kaggle.com/datasets/madhuraatmarambhagat/crop-recommendation-dataset "Crop Recommendation Dataset")
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
