@@ -32,14 +32,6 @@ A modern, interactive web application that helps farmers and agricultural profes
 - **Model Comparison**: Side-by-side performance comparison
 - **Detailed Descriptions**: Learn about each model's strengths and use cases
 
-### 🎨 **Enhanced User Experience**
-- **Modern Glass-morphism Design**: Beautiful, responsive interface
-- **Color-coded Indicators**: 
-  - 🟢 High suitability (70%+)
-  - 🟡 Medium suitability (40-69%)
-  - 🔴 Low suitability (<40%)
-- **Loading Animations**: Smooth user experience with animated feedback
-- **Mobile Responsive**: Works perfectly on all device sizes
 
 ## 🛠️ Requirements
 
@@ -114,13 +106,13 @@ The system can recommend from 22 different crops including:
 The application features **5 advanced ML models** with ensemble learning capabilities:
 
 ### Individual Models
-- **🔵 K-Nearest Neighbors (KNN)**: Pattern recognition based on similar historical cases
-- **🟢 Decision Tree**: Interpretable rule-based predictions with clear decision logic
-- **🟠 Random Forest**: Ensemble of decision trees with improved accuracy and robustness
+- ** K-Nearest Neighbors (KNN)**: Pattern recognition based on similar historical cases
+- ** Decision Tree**: Interpretable rule-based predictions with clear decision logic
+- ** Random Forest**: Ensemble of decision trees with improved accuracy and robustness
 
 ### Ensemble Models
-- **🟣 Voting Classifier (Soft)**: Combines KNN, Decision Tree, and Random Forest using probability averaging
-- **🔴 Stacking Classifier**: Uses KNN and Decision Tree as base models with Logistic Regression meta-learner
+- ** Voting Classifier (Soft)**: Combines KNN, Decision Tree, and Random Forest using probability averaging
+- ** Stacking Classifier**: Uses KNN and Decision Tree as base models with Logistic Regression meta-learner
 
 ### Model Performance
 All models are trained and evaluated with comprehensive metrics including accuracy, precision, recall, and F1-score. The ensemble models typically achieve **95%+ accuracy** on the test dataset.
@@ -157,4 +149,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Made with ❤️ for sustainable agriculture and smart farming**
+**Made with ❤️ for IT20 FINAL PROJECTS**
