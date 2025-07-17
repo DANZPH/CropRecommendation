@@ -11,7 +11,7 @@ from sklearn.metrics import accuracy_score, precision_recall_fscore_support
 from streamlit_echarts import st_echarts
 import time
 
-st.set_page_config(page_title="Crop Recommendation System", page_icon="🌱", layout="wide")
+st.set_page_config(page_title="Crop Prediction Model", page_icon="🌱", layout="wide")
 
 st.markdown("""
 <style>
@@ -409,7 +409,7 @@ body {
 # Header Section
 st.markdown("""
 <div class='header-modern'>
-    <h1>Crop Recommendation System</h1>
+    <h1>Crop Prediction Model</h1>
 </div>
 """, unsafe_allow_html=True)
 
@@ -423,7 +423,7 @@ with col_nav1:
     if st.button('🌱 Crop Recommendation', key='nav_recommend', use_container_width=True):
         st.session_state['active_section'] = 'recommend'
 with col_nav2:
-    if st.button('🔍 Reverse Search', key='nav_reverse', use_container_width=True):
+    if st.button('🔍 Best Soil & climate for Crops ', key='nav_reverse', use_container_width=True):
         st.session_state['active_section'] = 'reverse'
 with col_nav3:
     if st.button('📊 Model Performance', key='nav_info', use_container_width=True):
