@@ -387,6 +387,6 @@ if st.session_state['active_section'] == 'reverse':
 # Footer Section
 st.markdown("""
 <div class='footer-glass'>
-    <div style='color:#888; font-size:1rem;'>&copy; 2025</div>
+    <div style='color:#888; font-size:1rem;'>&copy; 2025 Kent Dancel</div>
 </div>
 """, unsafe_allow_html=True)
